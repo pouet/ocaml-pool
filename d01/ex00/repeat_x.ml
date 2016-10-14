@@ -1,11 +1,7 @@
-let repeat_x x =
-    let rec aux x acc =
-        if x < 0 then "Error"
-        else if x = 0 then acc
-        else aux (x - 1) (acc ^ "x")
-    in
-    aux x ""
-
+let rec repeat_x x =
+    if x < 0 then "Error"
+    else if x = 0 then ""
+    else "x" ^ repeat_x (x - 1)
 
 let () =
     print_endline (repeat_x (-1));

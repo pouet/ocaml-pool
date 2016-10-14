@@ -7,11 +7,11 @@ type nucleotide = phosphate * deoxyribose * nucleobase
 type helix = nucleotide list
 
 let generate_nucleotide = function
-    | 'A' -> "phosphate", "deoxyribose", A
-    | 'T' -> "phosphate", "deoxyribose", T
-    | 'C' -> "phosphate", "deoxyribose", C
-    | 'G' -> "phosphate", "deoxyribose", G
-    | _ -> "phosphate", "deoxyribose", None
+    | 'A' -> ("phosphate", "deoxyribose", A : nucleotide)
+    | 'T' -> ("phosphate", "deoxyribose", T : nucleotide)
+    | 'C' -> ("phosphate", "deoxyribose", C : nucleotide)
+    | 'G' -> ("phosphate", "deoxyribose", G : nucleotide)
+    | _ ->   ("phosphate", "deoxyribose", None : nucleotide)
 
 let generate_helix n =
     Random.self_init ();
@@ -21,7 +21,7 @@ let generate_helix n =
         | 0 -> []
         | n -> generate_nucleotide s.[Random.int 5] :: aux (n - 1)
     in
-    aux n
+    (aux n : helix)
 
 let helix_to_string (h : helix) =
     let nucleobase_to_string = function
@@ -50,4 +50,4 @@ let complementary_helix (h : helix) =
         | (_, _, b) :: tl ->
                 generate_nucleotide (get_pair b) :: aux tl
     in
-    aux h
+    (aux h : helix)

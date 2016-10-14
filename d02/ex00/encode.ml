@@ -1,18 +1,14 @@
 let encode l =
     let rec aux fst n = function
-        | [] -> []
-        | hd :: [] ->
-                if fst == hd then (n + 1, fst) :: []
-                else (n, fst) :: (1, hd) :: []
+        | [] -> (n, fst) :: []
         | hd :: tl ->
                 if fst == hd then aux fst (n + 1) tl
                 else (n, fst) :: (aux hd 1 tl)
     in
-    let f = function
-        | [] -> []
-        | hd :: tl -> aux hd 0 l
-    in
-    f l
+    match l with
+    | [] -> []
+    | hd :: _ -> aux hd 0 l
+
 
 let print_list l =
     let rec aux = function
@@ -24,7 +20,6 @@ let print_list l =
     in
     aux l
 
-
 let () =
-    let l = [ 5; 5; 5; 3; 1; 1; 1; ] in
+    let l = [ 5; 5; 5; 3; 1; 1; 1; 2; ] in
     print_list (encode l)

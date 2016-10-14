@@ -7,13 +7,38 @@ type rna = nucleobase list
 type nucleotide = phosphate * deoxyribose * nucleobase
 type helix = nucleotide list
 
+type aminoacid =
+    | Stop
+    | Ala
+    | Arg
+    | Asn
+    | Asp
+    | Cys
+    | Gln
+    | Glu
+    | Gly
+    | His
+    | Ile
+    | Leu
+    | Lys
+    | Met
+    | Phe
+    | Pro
+    | Ser
+    | Thr
+    | Trp
+    | Tyr
+    | Val
+
+type protein = aminoacid list
+
 let generate_nucleotide = function
-    | 'A' -> "phosphate", "deoxyribose", A
-    | 'T' -> "phosphate", "deoxyribose", T
-    | 'C' -> "phosphate", "deoxyribose", C
-    | 'G' -> "phosphate", "deoxyribose", G
-    | 'U' -> "phosphate", "deoxyribose", U
-    | _ -> "phosphate", "deoxyribose", None
+    | 'A' -> ("phosphate", "deoxyribose", A : nucleotide)
+    | 'T' -> ("phosphate", "deoxyribose", T : nucleotide)
+    | 'C' -> ("phosphate", "deoxyribose", C : nucleotide)
+    | 'G' -> ("phosphate", "deoxyribose", G : nucleotide)
+    | 'U' -> ("phosphate", "deoxyribose", U : nucleotide)
+    | _ ->   ("phosphate", "deoxyribose", None : nucleotide)
 
 let generate_helix n =
     Random.self_init ();
@@ -21,9 +46,9 @@ let generate_helix n =
 
     let rec aux = function
         | 0 -> []
-        | n -> generate_nucleotide s.[Random.int 5] :: aux (n - 1)
+        | n -> generate_nucleotide s.[Random.int 6] :: aux (n - 1)
     in
-    aux n
+    (aux n : helix)
 
 let helix_to_string (h : helix) =
     let nucleobase_to_string = function
@@ -54,7 +79,7 @@ let complementary_helix (h : helix) =
         | (_, _, b) :: tl ->
                 generate_nucleotide (get_pair b) :: aux tl
     in
-    aux h
+    (aux h : helix)
 
 let generate_rna (h : helix) =
     let get_pair = function
@@ -62,19 +87,82 @@ let generate_rna (h : helix) =
         | T -> A
         | C -> G
         | G -> C
+        | U -> U
         | _ -> None
     in
     let rec aux = function
         | [] -> []
         | (_, _, b) :: tl -> get_pair b :: aux tl
     in
-    aux h
+    (aux h : rna)
 
-let generate_bases_triplets r =
+let generate_bases_triplets (r : rna) =
     let rec aux = function
-        | (_, _, b) :: (_, _, c) :: (_, _, d) :: tl -> b * c * d :: aux tl
+        | a :: b :: c :: tl -> (a, b, c) :: aux tl
         | _ -> []
     in
     aux r
 
-TODO protein - decode_arm
+let string_of_protein (prot : protein) =
+    let get_str = function
+        | Stop -> "End of translation"
+        | Ala -> "Alanine"
+        | Arg -> "Arginine"
+        | Asn -> "Asparagine"
+        | Asp -> "Aspartique"
+        | Cys -> "Cysteine"
+        | Gln -> "Glutamine"
+        | Glu -> "Glutamique"
+        | Gly -> "Glycine"
+        | His -> "Histidine"
+        | Ile -> "Isoleucine"
+        | Leu -> "Leucine"
+        | Lys -> "Lysine"
+        | Met -> "Methionine"
+        | Phe -> "Phenylalanine"
+        | Pro -> "Proline"
+        | Ser -> "Serine"
+        | Thr -> "Threonine"
+        | Trp -> "Tryptophane"
+        | Tyr -> "Tyrosine"
+        | Val -> "Valine"
+    in
+    let rec aux = function
+        | [] -> ""
+        | hd :: tl -> get_str hd ^ aux tl
+    in
+    aux prot
+
+let decode_arn (r : rna) =
+    let get_amino = function
+        | U, A, A | U, A, G | U, G, A -> Stop
+        | G, C, A | G, C, C | G, C, G | G, C, U -> Ala
+        | A, G, A | A, G, G | C, G, A | C, G, C | C, G, G | C, G, U -> Arg
+        | A, A, C | A, A, U -> Asn
+        | G, A, C | G, A, U -> Asp
+        | U, G, C | U, G, U -> Cys
+        | C, A, A | C, A, G -> Gln
+        | G, A, A | G, A, G -> Glu
+        | G, G, A | G, G, G | G, G, U -> Gly
+        | C, A, C | C, A, U -> His
+        | A, U, A | A, U, C | A, U, U -> Ile
+        | C, U, A | C, U, C | C, U, G | C, U, U | U, U, A | U, U, G -> Leu
+        | A, A, A | A, A, G -> Lys
+        | A, U, G -> Met
+        | U, U, C | U, U, U -> Phe
+        | C, C, C | C, C, A | C, C, G | C, C, U -> Pro
+        | U, C, A | U, C, C | U, C, G | U, C, U | A, G, U | A, G, C -> Ser
+        | A, C, A | A, C, C | A, C, G | A, C, U -> Thr
+        | U, G, G -> Trp
+        | U, A, C | U, A, U -> Tyr
+        | G, U, A | G, U, C | G, U, G | G, U, U -> Val
+        | _ -> Stop
+    in
+    let rec aux = function
+        | hd :: tl ->
+                let tmp = get_amino hd in
+                if tmp = Stop then Stop :: []
+                else tmp :: aux tl
+        | _ -> []
+    in
+    (aux (generate_bases_triplets r) : protein)

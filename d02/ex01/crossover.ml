@@ -1,9 +1,8 @@
 let crossover l1 l2 =
     let rec find x = function
         | [] -> false
-        | hd :: tl ->
-                if hd == x then true
-                else find x tl
+        | hd :: _ when hd = x -> true
+        | _ :: tl -> find x tl
     in
     let rec cross = function
         | [] -> []
@@ -22,5 +21,5 @@ let rec print_list = function
 
 let () =
     let m = [ 1; 2; 3; 4; 5; 6; 7; 8; 9; ] in
-    let l = [ 2; 4; 7; 9; ] in
+    let l = [ 99; 2; 4; 10; 7; 9; ] in
     print_list (crossover l m)

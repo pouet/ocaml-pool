@@ -8,12 +8,12 @@ type nucleotide = phosphate * deoxyribose * nucleobase
 type helix = nucleotide list
 
 let generate_nucleotide = function
-    | 'A' -> "phosphate", "deoxyribose", A
-    | 'T' -> "phosphate", "deoxyribose", T
-    | 'C' -> "phosphate", "deoxyribose", C
-    | 'G' -> "phosphate", "deoxyribose", G
-    | 'U' -> "phosphate", "deoxyribose", U
-    | _ -> "phosphate", "deoxyribose", None
+    | 'A' -> ("phosphate", "deoxyribose", A : nucleotide)
+    | 'T' -> ("phosphate", "deoxyribose", T : nucleotide)
+    | 'C' -> ("phosphate", "deoxyribose", C : nucleotide)
+    | 'G' -> ("phosphate", "deoxyribose", G : nucleotide)
+    | 'U' -> ("phosphate", "deoxyribose", U : nucleotide)
+    | _ ->   ("phosphate", "deoxyribose", None : nucleotide)
 
 let generate_helix n =
     Random.self_init ();
@@ -21,9 +21,9 @@ let generate_helix n =
 
     let rec aux = function
         | 0 -> []
-        | n -> generate_nucleotide s.[Random.int 5] :: aux (n - 1)
+        | n -> generate_nucleotide s.[Random.int 6] :: aux (n - 1)
     in
-    aux n
+    (aux n : helix)
 
 let helix_to_string (h : helix) =
     let nucleobase_to_string = function
@@ -54,7 +54,7 @@ let complementary_helix (h : helix) =
         | (_, _, b) :: tl ->
                 generate_nucleotide (get_pair b) :: aux tl
     in
-    aux h
+    (aux h : helix)
 
 let generate_rna (h : helix) =
     let get_pair = function
@@ -62,11 +62,12 @@ let generate_rna (h : helix) =
         | T -> A
         | C -> G
         | G -> C
+        | U -> U
         | _ -> None
     in
     let rec aux = function
         | [] -> []
         | (_, _, b) :: tl -> get_pair b :: aux tl
     in
-    aux h
+    (aux h : rna)
 
