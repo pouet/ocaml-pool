@@ -16,7 +16,7 @@ let rec height = function
 let draw_tree t =
     let sz = 25 in
     let draw_square x y s =
-        Graphics.moveto x y;
+        Graphics.moveto (x - sz + 10) y;
         Graphics.draw_string s;
         Graphics.moveto (x - sz) (y - sz);
         Graphics.lineto (x + sz) (y - sz);

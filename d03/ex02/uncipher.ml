@@ -19,7 +19,7 @@ let unrot42 = uncaesar 42
 let xor n s =
     String.map (fun c -> char_of_int ((int_of_char c) lxor n)) s
 
-let rec ft_uncrypt s = function
+let rec ft_uncrypt (s : string) = function
     | [] -> s
     | hd :: tl -> ft_uncrypt (hd s) tl
 

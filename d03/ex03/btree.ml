@@ -41,19 +41,36 @@ let rec search_bst v = function
     | Nil -> v = Nil
     | Node (_, l, r) as n -> n = v || (search_bst v l) || (search_bst v r)
 
-(* TODO: a revoir... *)
-let rec add_bst add = function
-        | Nil -> Nil
-        | Node (v, Nil, Nil) ->
-                let Node (nv, _, _) = add in
-                if v = nv then failwith "BST can't have same value"
-                else if v < nv then Node (v, add, Nil)
-                else Node (v, Nil, add)
+let rec add_bst nv = function
+        | Nil -> Node (nv, Nil, Nil)
+        | Node (v, _, _) when v = nv -> failwith "BST can't have same value"
         | Node (v, l, r) ->
-                let Node (nv, _, _) = add in
-                if v = nv then failwith "BST can't have same value"
-                else if v < nv then Node (v, (add_bst add l), r)
-                else Node (v, l, (add_bst add r))
+                if nv < v then Node (v, (add_bst nv l), r)
+                else Node (v, l, (add_bst nv r))
+
+let rec get_val = function
+    | Node (v, _, Nil) -> v
+    | Node (v, _, r) -> get_val r
+    | _ -> failwith "Should never happen"
+
+let rec delete_bst nv = function
+    | Nil -> Nil 
+(* Node seul, pas de fils *)
+    | Node (v, Nil, Nil) when v = nv -> Nil
+(* Node avec un seul fils : gauche *)
+    | Node (v, (Node (_, _, _) as l), Nil) when v = nv -> l
+(* Node avec un seul fils : droit *)
+    | Node (v, Nil, (Node (_, _, _) as r)) when v = nv -> r
+(* Node avec deux fils *)
+    | Node (v, (Node (lv, _, _) as l), (Node (rv, _, _) as r)) when v = nv ->
+            let tmp = get_val l in
+            Node (tmp, (delete_bst tmp l), r)
+(* On parcoure les branches *)
+    | Node (v, l, r) ->
+            if nv < v then Node (v, (delete_bst nv l), r)
+            else Node (v, l, (delete_bst nv r))
+
+
 
 let () =
     let t = Node (1, Node(1, Nil, Node(2, Nil, Nil)), Nil) in
@@ -63,4 +80,8 @@ let () =
     print_endline (if is_bst t = true then "true" else "false");
     print_endline (if is_perfect t = true then "true" else "false");
     print_endline (if is_balanced t = true then "true" else "false");
-    print_endline (if search_bst (Node (2, Nil, Nil)) t = true then "true" else "false")
+    print_endline (if search_bst (Node (2, Nil, Nil)) t = true then "true" else
+        "false");
+    let a = add_bst 4 t in
+    let b = delete_bst 4 a in
+    print_endline (if is_bst b = true then "true" else "false")

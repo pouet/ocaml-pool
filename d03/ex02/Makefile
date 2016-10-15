@@ -1,5 +1,4 @@
-RESULT = graphics
-SOURCES = ft_graphics.ml
-LIBS = graphics
+RESULT = crypt
+SOURCES = cipher.ml uncipher.ml
 
 include OCamlMakefile

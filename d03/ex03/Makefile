@@ -1,5 +1,4 @@
-RESULT = graphics
-SOURCES = ft_graphics.ml
-LIBS = graphics
+RESULT = btree
+SOURCES = btree.ml
 
 include OCamlMakefile

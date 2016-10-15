@@ -19,7 +19,7 @@ let rot42 = caesar 42
 let xor n s =
     String.map (fun c -> char_of_int ((int_of_char c) lxor n)) s
 
-let rec ft_crypt s = function
+let rec ft_crypt (s : string) = function
     | [] -> s
     | hd :: tl -> ft_crypt (hd s) tl
 

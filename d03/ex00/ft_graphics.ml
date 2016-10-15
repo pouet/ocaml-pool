@@ -11,7 +11,7 @@ let draw_square x y size =
 let draw_tree_node node =
     let size = 50 in
     let draw_aux x y v =
-        Graphics.moveto x y;
+        Graphics.moveto (x - size / 2 + 10) y;
         Graphics.draw_string v;
         draw_square x y size
     in
