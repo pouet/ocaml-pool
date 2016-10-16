@@ -1,15 +1,4 @@
-module type CARD =
-sig
-    type t
-
-    val all : t list
-
-    val toString : t -> string
-    val toStringVerbose : t -> string
-
-end
-
-module Color : CARD =
+module Color =
 struct
 
     type t = Spade | Heart | Diamond | Club
@@ -30,7 +19,7 @@ struct
 
 end
 
-module Value : CARD =
+module Value =
 struct
 
     type t = T2 | T3 | T4 | T5 | T6 | T7 | T8 | T9 | T10 | Jack | Queen | King | As
@@ -114,9 +103,46 @@ struct
 
 end
 
-type t = Color.t * Value.t
+type t = Value.t * Color.t
 
-let newCard value color =
-    value * color
+let newCard (value : Value.t) (color : Color.t) =
+    (value, color : t)
 
-let allSpades =
+let allSpades = List.map (fun c -> (c, Color.Spade : t)) Value.all
+let allHearts = List.map (fun c -> (c, Color.Heart : t)) Value.all
+let allDiamonds = List.map (fun c -> (c, Color.Diamond : t)) Value.all
+let allClubs = List.map (fun c -> (c, Color.Club : t)) Value.all
+let all = allSpades @ allHearts @ allDiamonds @ allClubs
+
+let getValue (a, _ : t) = a
+let getColor (_, b : t) = b
+
+let toString (a, b : t) = Value.toString a ^ Color.toString b
+let toStringVerbose (a, b : t) =
+    Printf.sprintf "Card(%s,%s)"
+        (Value.toStringVerbose a) (Color.toStringVerbose b)
+
+let compare (a, _ : t) (b, _ : t) =
+    let tmpa = Value.toInt a
+    and tmpb = Value.toInt b in
+    if tmpa < tmpb then -1
+    else if tmpa > tmpb then 1
+    else 0
+
+let max (a : t) (b : t) =
+    if compare a b < 0 then b
+    else a
+
+let min (a : t) (b : t) =
+    if compare a b > 0 then b
+    else a
+
+let best = function
+    | [] -> invalid_arg "Empty list"
+    | hd :: tl -> List.fold_left max hd (hd :: tl)
+
+let isOf (_, c : t) (col : Color.t) = c = col
+let isSpade (c : t) = isOf c Color.Spade
+let isHeart (c : t) = isOf c Color.Heart
+let isDiamond (c : t) = isOf c Color.Diamond
+let isClub (c : t) = isOf c Color.Club
