@@ -5,4 +5,5 @@ let ft_print_rev s =
     print_char '\n'
 
 let () =
-    ft_print_rev "qwertyui"
+    ft_print_rev "";
+    ft_print_rev "24 uocuoc"

@@ -1,15 +1,13 @@
 let ft_string_all f s =
     let len = String.length s in
     let rec aux = function
+        | -1 -> false
         | 0 -> true
         | i ->
                 if f s.[i] == false then false
                 else aux (i - 1)
     in
-    if len == 0 then
-        false
-    else
-        aux (len - 1)
+    aux (len - 1)
 
 
 let is_digit c =
