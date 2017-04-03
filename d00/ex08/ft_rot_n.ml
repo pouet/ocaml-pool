@@ -1,18 +1,16 @@
-let is_upper c =
-    c >= 'A' && c <= 'Z'
-
-let is_lower c =
-    c >= 'a' && c <= 'z'
-
-let rot_lower c n =
-    let c = ((int_of_char c - int_of_char 'a') + n) mod 26 in
-    char_of_int (c + int_of_char 'a')
-
-let rot_upper c n =
-    let c = ((int_of_char c - int_of_char 'A') + n) mod 26 in
-    char_of_int (c + int_of_char 'A')
-
 let ft_rot_n n s =
+    let is_upper c =
+        c >= 'A' && c <= 'Z' in
+    let is_lower c =
+        c >= 'a' && c <= 'z' in
+    let rot_lower c n =
+        let c = ((int_of_char c - int_of_char 'a') + n) mod 26 in
+        char_of_int (c + int_of_char 'a')
+    in
+    let rot_upper c n =
+        let c = ((int_of_char c - int_of_char 'A') + n) mod 26 in
+        char_of_int (c + int_of_char 'A')
+    in
     let rot c =
         if is_upper c then
             rot_upper c n

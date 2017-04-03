@@ -1,8 +1,8 @@
-let print_int2 n =
-    print_int (n / 10);
-    print_int (n mod 10)
-
 let ft_print_comb2 () =
+    let print_int2 n =
+        print_int (n / 10);
+        print_int (n mod 10)
+    in
     for i = 0 to 99 do
         for j = i + 1 to 99 do
             print_int2 i;
