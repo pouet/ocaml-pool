@@ -71,3 +71,24 @@ let generate_rna (h : helix) =
     in
     (aux h : rna)
 
+
+let rna_to_string (h : rna) =
+    let nucleobase_to_string = function
+        | A -> "A"
+        | T -> "T"
+        | C -> "C"
+        | G -> "G"
+        | U -> "U"
+        | _ -> "?"
+    in
+    let rec aux = function
+        | [] -> ""
+        | hd :: tl -> (nucleobase_to_string hd) ^ aux tl
+    in
+    aux h
+
+let _ =
+    let h = generate_helix 10 in
+    let r = generate_rna h in
+    print_endline (helix_to_string h);
+    print_endline (rna_to_string r)

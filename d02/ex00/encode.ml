@@ -13,9 +13,8 @@ let encode l =
 let print_list l =
     let rec aux = function
         | [] -> ()
-        | (x , _) :: tl ->
-                print_int x;
-                print_endline "";
+        | (x , n) :: tl ->
+                Printf.printf "%d-%d\n" x n;
                 aux tl
     in
     aux l

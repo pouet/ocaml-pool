@@ -20,4 +20,6 @@ let gray n =
     print_endline ""
 
 let () =
+    gray 1;
+    gray 2;
     gray 3

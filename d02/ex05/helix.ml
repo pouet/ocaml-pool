@@ -51,3 +51,9 @@ let complementary_helix (h : helix) =
                 generate_nucleotide (get_pair b) :: aux tl
     in
     (aux h : helix)
+
+let _ =
+    let h = generate_helix 10 in
+    let c = complementary_helix h in
+    print_endline (helix_to_string h);
+    print_endline (helix_to_string c)
