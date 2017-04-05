@@ -105,27 +105,27 @@ let generate_bases_triplets (r : rna) =
 
 let string_of_protein (prot : protein) =
     let get_str = function
-        | Stop -> "End of translation"
-        | Ala -> "Alanine"
-        | Arg -> "Arginine"
-        | Asn -> "Asparagine"
-        | Asp -> "Aspartique"
-        | Cys -> "Cysteine"
-        | Gln -> "Glutamine"
-        | Glu -> "Glutamique"
-        | Gly -> "Glycine"
-        | His -> "Histidine"
-        | Ile -> "Isoleucine"
-        | Leu -> "Leucine"
-        | Lys -> "Lysine"
-        | Met -> "Methionine"
-        | Phe -> "Phenylalanine"
-        | Pro -> "Proline"
-        | Ser -> "Serine"
-        | Thr -> "Threonine"
-        | Trp -> "Tryptophane"
-        | Tyr -> "Tyrosine"
-        | Val -> "Valine"
+        | Stop -> "End of translation\n"
+        | Ala -> "Alanine - "
+        | Arg -> "Arginine - "
+        | Asn -> "Asparagine - "
+        | Asp -> "Aspartique - "
+        | Cys -> "Cysteine - "
+        | Gln -> "Glutamine - "
+        | Glu -> "Glutamique - "
+        | Gly -> "Glycine - "
+        | His -> "Histidine - "
+        | Ile -> "Isoleucine - "
+        | Leu -> "Leucine - "
+        | Lys -> "Lysine - "
+        | Met -> "Methionine - "
+        | Phe -> "Phenylalanine - "
+        | Pro -> "Proline - "
+        | Ser -> "Serine - "
+        | Thr -> "Threonine - "
+        | Trp -> "Tryptophane - "
+        | Tyr -> "Tyrosine - "
+        | Val -> "Valine - "
     in
     let rec aux = function
         | [] -> ""
@@ -161,17 +161,33 @@ let decode_arn (r : rna) =
     let rec aux = function
         | hd :: tl ->
                 let tmp = get_amino hd in
-                if tmp = Stop then Stop :: []
-                else tmp :: aux tl
-        | _ -> []
+                if tmp <> Stop then tmp :: aux tl
+                else Stop :: []
+        | _ -> Stop :: []
     in
     (aux (generate_bases_triplets r) : protein)
 
 
+let rna_to_string (h : rna) =
+    let nucleobase_to_string = function
+        | A -> "A"
+        | T -> "T"
+        | C -> "C"
+        | G -> "G"
+        | U -> "U"
+        | _ -> "?"
+    in
+    let rec aux = function
+        | [] -> ""
+        | hd :: tl -> (nucleobase_to_string hd) ^ aux tl
+    in
+    aux h
 
-let () =
+
+let _ =
     let a = generate_helix 12 in
-    print_endline (helix_to_string a);
     let b = generate_rna (complementary_helix a) in
     let c = decode_arn b in
+    print_endline (helix_to_string a);
+    print_endline (rna_to_string b);
     print_endline (string_of_protein c)

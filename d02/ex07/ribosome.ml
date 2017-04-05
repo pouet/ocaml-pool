@@ -105,27 +105,27 @@ let generate_bases_triplets (r : rna) =
 
 let string_of_protein (prot : protein) =
     let get_str = function
-        | Stop -> "End of translation"
-        | Ala -> "Alanine"
-        | Arg -> "Arginine"
-        | Asn -> "Asparagine"
-        | Asp -> "Aspartique"
-        | Cys -> "Cysteine"
-        | Gln -> "Glutamine"
-        | Glu -> "Glutamique"
-        | Gly -> "Glycine"
-        | His -> "Histidine"
-        | Ile -> "Isoleucine"
-        | Leu -> "Leucine"
-        | Lys -> "Lysine"
-        | Met -> "Methionine"
-        | Phe -> "Phenylalanine"
-        | Pro -> "Proline"
-        | Ser -> "Serine"
-        | Thr -> "Threonine"
-        | Trp -> "Tryptophane"
-        | Tyr -> "Tyrosine"
-        | Val -> "Valine"
+        | Stop -> "End of translation\n"
+        | Ala -> "Alanine - "
+        | Arg -> "Arginine - "
+        | Asn -> "Asparagine - "
+        | Asp -> "Aspartique - "
+        | Cys -> "Cysteine - "
+        | Gln -> "Glutamine - "
+        | Glu -> "Glutamique - "
+        | Gly -> "Glycine - "
+        | His -> "Histidine - "
+        | Ile -> "Isoleucine - "
+        | Leu -> "Leucine - "
+        | Lys -> "Lysine - "
+        | Met -> "Methionine - "
+        | Phe -> "Phenylalanine - "
+        | Pro -> "Proline - "
+        | Ser -> "Serine - "
+        | Thr -> "Threonine - "
+        | Trp -> "Tryptophane - "
+        | Tyr -> "Tyrosine - "
+        | Val -> "Valine - "
     in
     let rec aux = function
         | [] -> ""
@@ -161,8 +161,14 @@ let decode_arn (r : rna) =
     let rec aux = function
         | hd :: tl ->
                 let tmp = get_amino hd in
-                if tmp = Stop then Stop :: []
-                else tmp :: aux tl
-        | _ -> []
+                if tmp <> Stop then tmp :: aux tl
+                else Stop :: []
+        | _ -> Stop :: []
     in
     (aux (generate_bases_triplets r) : protein)
+
+let _ =
+    let h = generate_helix 10 in
+    let r = generate_rna h in
+    let arn = decode_arn r in 
+    print_endline (string_of_protein arn)
