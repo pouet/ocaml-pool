@@ -11,7 +11,12 @@ let get_jokes file =
     | _ -> Array.of_list !l
 
 let () =
-    Random.self_init ();
-    let jokes = get_jokes "jokes.txt" in
-    let n = Random.int (Array.length jokes) in
-    print_endline jokes.(n)
+        if (Array.length Sys.argv) == 2 then begin
+            Random.self_init ();
+            let jokes = get_jokes Sys.argv.(1) in
+            let len = Array.length jokes in
+            if len > 0 then begin
+                    let n = Random.int len in
+                    print_endline jokes.(n)
+            end;
+        end

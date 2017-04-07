@@ -3,7 +3,7 @@ let eu_dist a b =
     for i = 0 to Array.length a - 1 do
         x := (a.(i) -. b.(i)) *. (a.(i) -. b.(i))
     done;
-    sqrt !x
+    !x ** 0.5
 
 let () =
     print_float (eu_dist [| 1.; 2.; 3.; 4.; |] [| 4.; 3.; 2.; 1.; |]);
