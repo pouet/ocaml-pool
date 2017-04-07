@@ -43,9 +43,13 @@ let draw_tree t =
 let () =
     let t = Node (1, Node(1, Nil, Node(2, Nil, Nil)), Nil) in
     let u = Node ("1", Node("1", Nil, Node("2", Nil, Nil)), Nil) in
-    Printf.printf "%d\n" (size t);
-    Printf.printf "%d\n" (height t);
+    print_int (size t);
+    print_endline "";
+    print_int (height t);
+    print_endline "";
+    try
     draw_tree u;
     while true do
         ()
-    done
+    done;
+    with _ -> ()

@@ -28,8 +28,11 @@ let draw_tree_node node =
     | _ -> ()
 
 let () =
+    try
     Graphics.open_graph "";
     draw_tree_node (Node ("toto", Nil, Nil));
     while true do
         ()
-    done
+    done;
+    Graphics.clear_graph ()
+    with _ -> ()

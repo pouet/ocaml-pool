@@ -24,6 +24,7 @@ let rec ft_crypt (s : string) = function
     | hd :: tl -> ft_crypt (hd s) tl
 
 let () =
-    print_endline (ft_crypt "salutations" [ rot42; (caesar 13); (xor 7); ]);
+    print_endline (ft_crypt "Hello World !" [ rot42; (caesar 13); (xor 7); ]);
+    print_endline (caesar 3 "DECODEX");
     print_endline (rot42 "salutations");
     print_endline (xor 13 "salutations")
