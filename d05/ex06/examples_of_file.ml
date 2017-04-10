@@ -3,8 +3,9 @@ let get_line f =
     let s = Str.split (Str.regexp ",") l in
     let s = List.rev s in
     let c = List.hd s in
+    if String.length c <> 1 then failwith ("Invalid character : " ^ c);
     let s = List.rev (List.tl s) in
-    let s = List.map (fun s -> float_of_string s) s in
+    let s = List.map (fun s -> if String.length s = 0 then failwith ("Invalid number : " ^ s); float_of_string s) s in
     let tab = Array.of_list s in
     (tab, c)
 
@@ -19,6 +20,7 @@ let examples_of_file f =
             done
         with
         | End_of_file   -> close_in in_file
+        | Failure err   -> close_in in_file; ret := []; print_endline err
         | _             -> ret := []; print_endline "Invalid file format"
     in
     get_input ();
