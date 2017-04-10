@@ -1,7 +1,8 @@
 let eu_dist a b =
     let x = ref 0. in
     for i = 0 to Array.length a - 1 do
-        x := (a.(i) -. b.(i)) *. (a.(i) -. b.(i))
+        let tmp = a.(i) -. b.(i) in
+        x := tmp *. tmp
     done;
     !x ** 0.5
 
