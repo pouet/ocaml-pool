@@ -1,7 +1,7 @@
 module StringHashtbl = Hashtbl.Make(struct
         type t = string
 
-        let equal s t = (=)
+        let equal = (=)
         let hash s =
             let len = String.length s - 1 in
             let rec aux acc = function

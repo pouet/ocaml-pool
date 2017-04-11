@@ -67,7 +67,7 @@ module Make : MAKEFIXED =
             let sub x y = x - y
             let mul x y = of_float ((to_float x) *. (to_float y))
             let div x y =
-                if y = 0 then 0
+                if y = 0 then zero
                 else of_float ((to_float x) /. (to_float y))
 
             let foreach x y f =
