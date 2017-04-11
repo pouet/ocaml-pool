@@ -1,4 +1,4 @@
-let sum x y = x +. y
+let sum = (+.)
 
 let _ =
     print_float (sum 1. 12.5);

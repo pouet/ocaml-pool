@@ -22,7 +22,7 @@ let one_nn (lst : radar list) ((base_tab, base_s as base) : radar) =
     let _, s = List.fold_left fct base lst in
     s
 
-let k_nn (lst : radar list) k ((base_tab, base_s as base) : radar) =
+let k_nn (lst : radar list) k ((base_tab, base_s) : radar) =
         let tmp = List.sort (fun (tab, _) (tab', _) ->
                                 let a = eu_dist base_tab tab
                                 and b = eu_dist base_tab tab' in

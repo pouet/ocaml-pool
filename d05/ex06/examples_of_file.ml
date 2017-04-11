@@ -1,3 +1,5 @@
+(* ocaml str.cma examples_of_file.ml *)
+
 let get_line f =
     let l = input_line f in
     let s = Str.split (Str.regexp ",") l in
