@@ -4,4 +4,7 @@ let _ =
     print_endline a#to_string;
     a#talk;
     a#use_sonic_screwdriver;
-    print_endline (a#travel_in_time 2017 1987)#to_string
+    let a = a#travel_in_time 2017 1987 in
+    print_endline a#to_string;
+    let a = a#travel_in_time 1987 100 in
+    print_endline a#to_string

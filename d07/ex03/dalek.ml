@@ -8,16 +8,17 @@ let dalek_name () =
     tab.(Random.int 4)
 
 class dalek =
-    object (self)
+    object
         val _name : string = dalek_name ()
         val _hp : int = 100
-        val _shield : bool ref = ref true
+        val mutable _shield = true
+(*         val _shield : bool ref = ref true *)
 
-(*         initializer  *)
+        initializer print_endline "DALEK is aliiiiiiiiiiveeeee !!!!!"
 
         method to_string =
             "Name : " ^ _name ^ " | HP : " ^ (string_of_int _hp) ^ " | Shield : " ^
-            (if !_shield then "true" else "false")
+            (if _shield then "true" else "false")
 
         method talk =
             let tab = [|
@@ -30,7 +31,7 @@ class dalek =
 
         method exterminate (ppl : People.people) =
             ppl#die;
-            _shield := (if !_shield = true then false else true)
+            _shield <- (if _shield = true then false else true)
 
         method die =
             print_endline "Emergency Temporal Shift !"

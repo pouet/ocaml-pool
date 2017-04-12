@@ -1,15 +1,22 @@
 let _ =
     Random.self_init ();
 
-    let a = new Doctor.doctor "toto" 50 in
-    let b = new People.people "titi" in
+    let ppl = new People.people "titi" in
+    let dct = new Doctor.doctor "toto" 50 in
+    let dal = new Dalek.dalek in
 
-    let d = new Dalek.dalek in
+    print_endline ppl#to_string;
+    print_endline dct#to_string;
+    print_endline dal#to_string;
 
-    print_endline d#to_string;
-    d#talk;
-    d#exterminate b;
-    print_endline d#to_string;
-    d#exterminate b;
-    print_endline d#to_string;
-    d#die
+    ppl#talk;
+    dct#talk;
+    dal#talk;
+
+    dal#exterminate ppl;
+    print_endline dal#to_string;
+    dal#exterminate ppl;
+    print_endline dal#to_string;
+
+    ppl#die;
+    dal#die
