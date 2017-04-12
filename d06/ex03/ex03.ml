@@ -111,13 +111,13 @@ let () =
     pf "min       : %s\n" (Fixed8.to_string (Fixed8.min Fixed8.zero Fixed8.one));
     pf "max       : %s\n" (Fixed8.to_string (Fixed8.max Fixed8.zero Fixed8.one));
 
-    pf "gth       : %s\n" (if Fixed8.gth Fixed8.zero Fixed8.one then "true" else "false");
-    pf "lth       : %s\n" (if Fixed8.lth Fixed8.zero Fixed8.one then "true" else "false");
-    pf "gte       : %s\n" (if Fixed8.gte Fixed8.zero Fixed8.one then "true" else "false");
-    pf "lte       : %s\n" (if Fixed8.lte Fixed8.zero Fixed8.one then "true" else "false");
+    pf "gth       : %B\n" (Fixed8.gth Fixed8.zero Fixed8.one);
+    pf "lth       : %B\n" (Fixed8.lth Fixed8.zero Fixed8.one);
+    pf "gte       : %B\n" (Fixed8.gte Fixed8.zero Fixed8.one);
+    pf "lte       : %B\n" (Fixed8.lte Fixed8.zero Fixed8.one);
 
-    pf "eqp       : %s\n" (if Fixed8.eqp Fixed8.zero Fixed8.zero then "true" else "false");
-    pf "eqs       : %s\n" (if Fixed8.eqs Fixed8.zero Fixed8.zero then "true" else "false");
+    pf "eqp       : %B\n" (Fixed8.eqp Fixed8.zero Fixed8.zero);
+    pf "eqs       : %B\n" (Fixed8.eqs Fixed8.zero Fixed8.zero);
 
     pf "add       : %s\n" (Fixed8.to_string (Fixed8.add x8 x8));
     pf "sub       : %s\n" (Fixed8.to_string (Fixed8.sub x8 x8));

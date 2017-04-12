@@ -28,8 +28,8 @@ module MakeEvalExpr : MAKEEVALEXPR =
                 | Add of expr * expr
                 | Mul of expr * expr
 
-            let add x y = Evalexpr.add x y
-            let mul x y = Evalexpr.mul x y
+            let add = Evalexpr.add
+            let mul = Evalexpr.mul
 
             let rec eval = function
                 | Value v          -> v
