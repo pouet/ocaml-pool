@@ -1,9 +1,9 @@
-NAME=calc
+NAME=try
 
 all: $(NAME)
 
 $(NAME):
-	ocamlopt -o $(NAME) calc.ml
+	ocamlopt -o $(NAME) try.ml main.ml
 
 clean:
 	$(RM) *.cmi *.cmx *.o

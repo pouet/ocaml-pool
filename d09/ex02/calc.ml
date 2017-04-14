@@ -27,7 +27,7 @@ module FLOAT : (MONOID with type element = float) =
         type element = float
 
         let zero1 = 0.
-        let zero2 = 0.
+        let zero2 = 1.
 
         let add = ( +. )
         let sub = ( -. )
