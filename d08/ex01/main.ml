@@ -39,4 +39,12 @@ let _ =
     print_endline dm#to_string;
     print_endline oz#to_string;
     print_endline fa#to_string;
-    print_endline mth#to_string
+    print_endline mth#to_string;
+
+    print_endline "-------------";
+
+    Printf.printf "equals water water : %B\n" (w#equals w);
+    Printf.printf "equals tnt carbon_dioxyde : %B\n" (tnt#equals cd);
+    Printf.printf "equals carbon_dioxyde ozone : %B\n" (cd#equals oz);
+    Printf.printf "equals dicarbon_monoxide methane : %B\n" (dm#equals mth);
+    Printf.printf "equals fulminic_acid fulminic_acid : %B\n" (fa#equals fa)

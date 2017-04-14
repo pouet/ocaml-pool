@@ -1,8 +1,8 @@
 class virtual atom n sym num =
     object (self : 'self)
-        method name = n
-        method symbol = sym
-        method number = num
+        method name : string = n
+        method symbol : string = sym
+        method number : int = num
 
         method to_string = "Atom: " ^ self#name ^ " " ^ (string_of_int self#number) ^
             " " ^ self#symbol

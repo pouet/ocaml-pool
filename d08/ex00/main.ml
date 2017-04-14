@@ -5,7 +5,7 @@ let _ =
     let be = new Atom.beryllium in
     let b = new Atom.bore in
     let c = new Atom.carbon in
-    let n = new Atom.azot in
+    let n = new Atom.nitrogen in
     let o = new Atom.oxygen in
 
     print_endline h#to_string;

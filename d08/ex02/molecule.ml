@@ -15,12 +15,15 @@ let string_of_atoms at =
                     | _     , "H" when c_exists -> 1
                     | s     , t                 -> if s > t then 1 else -1) at)
 
-class virtual molecule n form =
-    object (self)
-        method name = n
-        method forumula = string_of_atoms form
+class virtual molecule name' formula' =
+    object (self : 'self)
+        val raw_formula = formula'
+
+        method name : string = name'
+        method forumula : string = string_of_atoms formula'
 
         method to_string = "Molecule: " ^ self#name ^ " -> " ^ self#forumula
+        method equals (other : 'self) = other#forumula = self#forumula
     end
 
 class water =
