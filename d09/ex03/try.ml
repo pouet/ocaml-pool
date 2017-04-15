@@ -8,12 +8,12 @@ let return s = Success s
 
 let bind el f =
         match el with
-        | Success _     -> begin
-                try f el
-                with
-                | e     -> Failure e
+        | Success a    -> begin
+                            try f a
+                            with
+                            | a     -> Failure a
         end
-        | _             -> el
+        | Failure a     -> Failure a
 
 let recover el f =
         match el with

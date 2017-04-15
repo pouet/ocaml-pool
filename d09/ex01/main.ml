@@ -6,7 +6,7 @@ let _ =
     and b = App.fail ("toto", "succeed", 12)
     and c = App.succeed ("tata", "failed", 32) in
     let d = App.combine b c
-    and e = App.combine ("tutu ", "ole", 42) ("titi", "ahah", 42) in
+    and e = App.combine ("tutu ", "ole", 42) ("titi", "ahah", 142) in
 
     print_proj a;
     print_proj b;
