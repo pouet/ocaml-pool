@@ -35,5 +35,5 @@ let flatten el =
         | Failure a     -> Failure a
 
 let to_string = function
-        | Success s     -> s
+        | Success s     -> "Success : " ^ s
         | Failure _     -> "Failure"
